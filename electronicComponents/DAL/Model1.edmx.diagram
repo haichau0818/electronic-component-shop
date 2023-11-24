@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1825838165664ffe9bf66608b73b2170" Name="Diagram1">
+        <EntityTypeShape EntityType="electronicComponents1Model.AccessTimeCount" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Cart" Width="1.5" PointX="7.5" PointY="7.875" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Comment" Width="1.5" PointX="10.5" PointY="12.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Customer" Width="1.5" PointX="3" PointY="18" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Decentralization" Width="1.5" PointX="11" PointY="24.5" />
+        <EntityTypeShape EntityType="electronicComponents1Model.DiscountCode" Width="1.5" PointX="8.25" PointY="21.375" />
+        <EntityTypeShape EntityType="electronicComponents1Model.DiscountCodeDetail" Width="1.5" PointX="10.5" PointY="21.5" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Employee" Width="1.5" PointX="6" PointY="22.75" />
+        <EntityTypeShape EntityType="electronicComponents1Model.EmployeeType" Width="1.5" PointX="3.75" PointY="23.75" />
+        <EntityTypeShape EntityType="electronicComponents1Model.ImportCoupon" Width="1.5" PointX="8.25" PointY="25.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.ImportCouponDetail" Width="1.5" PointX="10.5" PointY="16.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Member" Width="1.5" PointX="5.25" PointY="1.875" />
+        <EntityTypeShape EntityType="electronicComponents1Model.MemberCategory" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="electronicComponents1Model.MemberDiscountCode" Width="1.5" PointX="12.75" PointY="8.875" />
+        <EntityTypeShape EntityType="electronicComponents1Model.OrderDetail" Width="1.5" PointX="7.5" PointY="12.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.OrderShip" Width="1.5" PointX="5.25" PointY="17.5" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Producer" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Product" Width="1.5" PointX="5.25" PointY="10.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.ProductCategory" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="electronicComponents1Model.ProductCategoryParent" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="electronicComponents1Model.ProductViewed" Width="1.5" PointX="10.5" PointY="9.25" />
+        <EntityTypeShape EntityType="electronicComponents1Model.QA" Width="1.5" PointX="7.5" PointY="15.75" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Rating" Width="1.5" PointX="13.5" PointY="12.125" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Rolee" Width="1.5" PointX="8.75" PointY="28.75" />
+        <EntityTypeShape EntityType="electronicComponents1Model.Supplier" Width="1.5" PointX="6" PointY="27.25" />
+        <EntityTypeShape EntityType="electronicComponents1Model.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" />
+        <AssociationConnector Association="electronicComponents1Model.fk_c_idm" />
+        <AssociationConnector Association="electronicComponents1Model.fk_c_idp" />
+        <AssociationConnector Association="electronicComponents1Model.fk_cm_idm" />
+        <AssociationConnector Association="electronicComponents1Model.fk_cm_idp" />
+        <AssociationConnector Association="electronicComponents1Model.fk_ctm_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_od_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_dtl_ide" />
+        <AssociationConnector Association="electronicComponents1Model.fk_dtl_idr" />
+        <AssociationConnector Association="electronicComponents1Model.fk_dcc_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_dccd_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_mbdc_idd" />
+        <AssociationConnector Association="electronicComponents1Model.fk_eml_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_ipc_ide" />
+        <AssociationConnector Association="electronicComponents1Model.fk_qa_ide" />
+        <AssociationConnector Association="electronicComponents1Model.fk_ipc_ids" />
+        <AssociationConnector Association="electronicComponents1Model.fk_ipcd_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_ipcd_idp" />
+        <AssociationConnector Association="electronicComponents1Model.fk_mb_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_mbdc_idm" />
+        <AssociationConnector Association="electronicComponents1Model.fk_pv_idm" />
+        <AssociationConnector Association="electronicComponents1Model.fk_qa_idm" />
+        <AssociationConnector Association="electronicComponents1Model.fk_rt_idm" />
+        <AssociationConnector Association="electronicComponents1Model.fk_odd_ido" />
+        <AssociationConnector Association="electronicComponents1Model.fk_odd_idp" />
+        <AssociationConnector Association="electronicComponents1Model.FK_Product_Producer" />
+        <AssociationConnector Association="electronicComponents1Model.fk_pd_id" />
+        <AssociationConnector Association="electronicComponents1Model.fk_pv_idp" />
+        <AssociationConnector Association="electronicComponents1Model.fk_qa_idp" />
+        <AssociationConnector Association="electronicComponents1Model.fk_rt_idp" />
+        <AssociationConnector Association="electronicComponents1Model.fk_pc_id" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

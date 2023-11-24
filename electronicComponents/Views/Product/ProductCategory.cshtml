@@ -1,0 +1,337 @@
+﻿@model PagedList.IPagedList<electronicComponents.DAL.Product>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ProductCategory";
+    Layout = "~/Views/Shared/_ProductLayout.cshtml";
+}
+
+@{
+    int couter1 = 1;
+    IEnumerable<electronicComponents.DAL.Product> productsSelling = ViewBag.ListProSelling;
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.AddItemInCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemInCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+    <div class="container-fluid">
+        <div class="inner-sec-shop px-lg-4 px-3">
+            <h3 class="tittle-w3layouts my-lg-4 mt-3">@ViewBag.Name </h3>
+            <div class="row">
+                <!-- product left -->
+                <div class="side-bar col-lg-3">
+                    <div class="search-hotel">
+                        <h3 class="agileits-sear-head">Tìm kiếm</h3>
+                        <form action="#" method="post">
+                            <input class="form-control" type="search" name="search" placeholder="Tìm kiếm..." required="">
+                            <button class="btn1">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <div class="clearfix"> </div>
+                        </form>
+                    </div>
+                    <!-- price range -->
+                    <div class="range">
+                        <h3 class="agileits-sear-head">Lọc theo giá</h3>
+                        <ul class="dropdown-menu6">
+                            <li>
+
+                                <div id="slider-range"></div>
+                                <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //price range -->
+                    <!--preference -->
+                    <div class="left-side">
+                        <h3 class="agileits-sear-head">Deal Offer On</h3>
+                        <ul>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">Backpack</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">Phone Pocket</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- // preference -->
+                    <!-- discounts -->
+                    <div class="left-side">
+                        <h3 class="agileits-sear-head">Discount</h3>
+                        <ul>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">5% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">10% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">20% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">30% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">50% or More</span>
+                            </li>
+                            <li>
+                                <input type="checkbox" class="checked">
+                                <span class="span">60% or More</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //discounts -->
+                    <!-- reviews -->
+                    <div class="customer-rev left-side">
+                        <h3 class="agileits-sear-head">Customer Review</h3>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <span>5.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>4.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.5</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>3.0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <span>2.5</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //reviews -->
+                    <!-- deals -->
+                    
+                    <!-- //deals -->
+                </div>
+                <!-- //product left -->
+                <!--/product right-->
+                <div class="left-ads-display col-lg-9">
+                    <div class="wrapper_top_shop">
+                     
+
+                        <div class="row my-lg-3 my-0">
+
+                            @{
+                                int couter = 1;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                if (couter == 1)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+
+                                    couter++;
+                                }
+                                else if (couter == 2)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+
+                                    couter++;
+                                }
+                                else if (couter == 3)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+
+                                    couter++;
+                                }
+                                else if (couter == 4)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 5)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 6)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 7)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 8)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 9)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 10)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 11)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    couter++;
+                                }
+                                else if (couter == 12)
+                                {
+                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    break;
+                                }
+                            }
+
+                            <!--  -->
+
+                        </div>
+                        <div class="product-sec1" id="ProductContainer">
+                            <br />
+                            <div id='Paging' style="text-align: right">
+                                @Html.PagedListPager(Model, page => Url.Action("ProductCategory", new { ID = ViewBag.productCategoryID, page }))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--//product right-->
+            </div>
+            <!--/slide-->
+            <div class="slider-img mid-sec mt-lg-5 mt-2">
+                <!--//banner-sec-->
+                <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Sản phẩm nổi bật</h3>
+                <div class="mid-slider">
+                    <div class="owl-carousel owl-theme row">
+                        @foreach (var item in productsSelling)
+                        {
+                            if (couter1 == 1)
+                            {
+                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                                couter1++;
+                            }
+                            else if (couter1 == 2)
+                            {
+                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                                couter1++;
+                            }
+                            else if (couter1 == 3)
+                            {
+                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                                couter1++;
+                            }
+                            else if (couter1 == 4)
+                            {
+                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                                couter1++;
+                            }
+                            else if (couter1 == 5)
+                            {
+                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                                couter1++;
+                            }
+                            else if (couter1 == 6)
+                            {
+                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                                break;
+                            }
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--//slider-->
+        </div>
+    </div>
+</section>
+

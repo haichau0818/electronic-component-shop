@@ -1,0 +1,447 @@
+﻿@using electronicComponents.DAL
+@model Product
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_ProductDetailLayout.cshtml";
+}
+
+@{
+    IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
+    IEnumerable<QA> qAs = ViewBag.CommentQA as IEnumerable<QA>;
+    IEnumerable<Rating> ratings = ViewBag.ListRating as IEnumerable<Rating>;
+    Member member = Session["Member"] as Member;
+
+    int couter1 = 1;
+    IEnumerable<electronicComponents.DAL.Product> productsSelling = ViewBag.ListProSelling;
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Textarea1').change(function () {
+            $('#content').val($(this).val());
+        });
+        $('#Textarea2').change(function () {
+            $('#content2').val($(this).val());
+        });
+        $(".btnPost").on("click", function () {
+            $("#Textarea1").val("");
+            $("#Textarea2").val("");
+        });
+        $('.item_add').on('click', function () {
+            swal({
+                title: "Thông báo",
+                text: "Thêm vào giỏ hàng thành công!",
+                icon: "success",
+                timer: 1500
+            });
+        });
+        $('.AddItemInCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemInCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+<div class="banner_inner">
+    <div class="services-breadcrumb">
+        <div class="inner_breadcrumb">
+
+            <ul class="short">
+                <li>
+                    <a href="index.html">Trang chủ</a>
+                    <i>|</i>
+                </li>
+                <li>Chi tiết</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+    <div class="container">
+        <div class="inner-sec-shop pt-lg-4 pt-3">
+            <div class="row">
+                <div class="col-lg-4 single-right-left ">
+                    <div class="grid images_3_of_2">
+                        <div class="flexslider1">
+                            <ul class="slides">
+                                <li data-thumb="@Url.Content("~/Content/images/" + Model.image1)">
+                                    <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.image1)" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+                                </li>
+                                @if (Model.image2 != null)
+                                {
+                                    <li data-thumb="@Url.Content("~/Content/images/" + Model.image2)">
+                                        <div class="thumb-image"> <img src=@Url.Content("~/Content/images/" + Model.image2) data-imagezoom="true" class="img-fluid" alt=" "> </div>
+                                    </li>
+                                }
+                                @if (Model.image3 != null)
+                                {
+                                    <li data-thumb="@Url.Content("~/Content/images/" + Model.image3)">
+                                        <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.image3)" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+                                    </li>
+                                }
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 single-right-left simpleCart_shelfItem">
+                    <h3>@Model.name</h3>
+
+
+                    @if (Model.discount > 0)
+                    {
+                        <p><span class="money">@Model.promotionPrice.Value.ToString("#,##")₫</span><del>@Model.price.Value.ToString("#,##")₫</del></p>
+                    }
+                    else
+                    {
+                        <p><span class="money">@Model.price.Value.ToString("#,##")₫</span></p>
+
+                    }
+
+                    <div class="rating1">
+                        <ul class="stars">
+                            @{
+                                if (ViewBag.Rating == 5)
+                                {
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                }
+                                else if (ViewBag.Rating == 4)
+                                {
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                }
+                                else if (ViewBag.Rating == 3)
+                                {
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                }
+                                else if (ViewBag.Rating == 2)
+                                {
+
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                }
+                                else if (ViewBag.Rating == 1)
+                                {
+
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                }
+                                else
+                                {
+
+                                }
+
+
+                            }
+                        </ul>
+                    </div>
+                    <!--Infor Product-->
+
+                    <div class="occasional">
+                        <h5>Lượt xem: @Model.viewCount</h5>
+                        <h5>Thương hiệu: @Model.Producer.name</h5>
+                        <h5>Kho: @Model.quantity</h5>
+                        <h5>Đã bán: @Model.purchaseCount</h5>
+                        <div class="clearfix"> </div>
+                    </div>
+
+                    <!--Add Cart-->
+                    <div class="occasion-cart">
+                        <div class="googles single-item singlepage">
+
+                            <button class="googles-cart pgoogles-cart AddItemInCart" data-id="@Model.id">
+                                Add to Cart
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                    <ul class="footer-social text-left mt-lg-4 mt-3">
+                        <li>Share On : </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-facebook-f"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-twitter"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-google-plus-g"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-linkedin-in"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fas fa-rss"></span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="clearfix"> </div>
+                <!--/tabs-->
+                <div class="responsive_tabs">
+                    <div id="horizontalTab">
+                        <ul class="resp-tabs-list">
+                            <li>Mô tả</li>
+                            <li>Thông số kỹ thuật</li>
+
+                            <li>Đánh giá</li>
+                            <li>Hỏi đáp</li>
+                        </ul>
+                        <div class="resp-tabs-container">
+                            <!--/tab_one-->
+                            <div class="tab1">
+
+                                <div class="single_page">
+                                    <h6>@Model.name</h6>
+                                    <p>
+                                        @Model.descriptionn
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="tab1">
+
+                                <div class="single_page">
+                                    <h6>Thông số kỹ thuật</h6>
+                                    <p>
+                                        @Model.specifications
+                                    </p>
+                                </div>
+                            </div>
+                            <!--//tab_one-->
+                            <div class="tab2">
+
+                                <div class="single_page">
+                                    <div class="bootstrap-tab-text-grids">
+                                        <div class="bootstrap-tab-text-grid">
+
+                                            <div class="bootstrap-tab-text-grid-left">
+
+                                                <img src="~/Content/images/user.png" style="width:50px;height:50px" alt=" " class="img-fluid" />
+                                            </div>
+                                            <div class="bootstrap-tab-text-grid-right">
+                                                @if (ratings.Count() > 0)
+                                                {
+                                                    foreach (var item in ratings)
+                                                    {
+
+                                                        <ul>
+                                                            <li><a href="#">@item.Member.fullName (@ViewBag.Rating/5)</a></li>
+                                                            <li><a href="#">@item.dateRating</a></li>
+                                                        </ul>
+
+                                                        <div style="background-color:lightgray">
+                                                            <p style="color:black">@item.content</p>
+                                                        </div>
+                                                        <hr />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p>Chưa có đánh giá</p>
+                                                }
+                                            </div>
+                                            <div class="clearfix"> </div>
+                                        </div>
+                                        <div class="add-review">
+                                            <h4>Thêm đánh giá</h4>
+                                            <form action="#" method="post">
+                                                <input class="form-control" type="text" name="Name" placeholder="Enter your email..." required="">
+                                                <input class="form-control" type="email" name="Email" placeholder="Enter your email..." required="">
+                                                <textarea name="Message" required=""></textarea>
+                                                <input type="submit" value="SEND">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab3">
+                                <div class="single_page">
+                                    <div class="bootstrap-tab-text-grid">
+                                        <div class="bootstrap-tab-text-grid">
+                                            <div class="bootstrap-tab-text-grid-left">
+
+                                                <img src="~/Content/images/user.png" style="width:50px;height:50px" alt=" " class="img-fluid" />
+                                            </div>
+                                            <div class="bootstrap-tab-text-grid-right" id="qaContainer">
+
+
+                                                @if (qAs.Count() > 0)
+                                                {
+                                                    foreach (var item in qAs)
+                                                    {
+                                                        <p><label style="color:black">@item.Member.fullName:</label>  @item.dateQuestion</p>
+                                                        <p class="para" style="color:black">@item.question</p>
+                                                        if (item.answer != null)
+                                                        {
+                                                            <div style="background-color:lightgray">
+                                                                <p><label style="color:brown">@item.Employee.fullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.dateAnswer</p>
+                                                                <p class="para" style="color:black">@item.answer</p>
+                                                            </div>
+                                                        }
+                                                        <hr />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p>Chưa có câu hỏi nào</p>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                        <div class="add-review">
+                                            @if (Session["Member"] != null)
+                                            {
+                                                <h4>Thêm câu hỏi</h4>
+                                                using (Ajax.BeginForm("AddQuestion", "Product", new AjaxOptions
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "POST",
+                                                    LoadingElementId = "ajax-loader",
+                                                    UpdateTargetId = "qaContainer",
+
+                                                }))
+                                                {
+                                                    <input value="@member.id" hidden="hidden" name="memberID" />
+                                                    <input value="@Model.id" hidden="hidden" name="productID" />
+                                                    <input type="text" name="Question" id="content2" required="" hidden="hidden" />
+                                                    <textarea name="Message" id="Textarea2" placeholder="Nội dung câu hỏi..."></textarea>
+                                                    <input type="submit" value="Đăng" class="btnPost">
+
+                                                }
+                                                <div class="ajax-loader"></div>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-primary submit mb-4">
+                                                    <ul class="cart-inner-info">
+                                                        <li class="button-log">
+                                                            <a class="btn-open">
+                                                                <span aria-hidden="true"> Đăng nhập để đặt câu hỏi</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--//tabs-->
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <!--/slide-->
+        <div class="slider-img mid-sec mt-lg-5 mt-2 px-lg-5 px-3">
+            <!--//banner-sec-->
+            <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Featured Products</h3>
+            <div class="mid-slider">
+                <div class="owl-carousel owl-theme row">
+                    @foreach (var item in productsSelling)
+                    {
+                        if (couter1 == 1)
+                        {
+                            @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                            couter1++;
+                        }
+                        else if (couter1 == 2)
+                        {
+                            @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                            couter1++;
+                        }
+                        else if (couter1 == 3)
+                        {
+                            @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                            couter1++;
+                        }
+                        else if (couter1 == 4)
+                        {
+                            @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                            couter1++;
+                        }
+                        else if (couter1 == 5)
+                        {
+                            @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                            couter1++;
+                        }
+                        else if (couter1 == 6)
+                        {
+                            @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+                            break;
+                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!--//slider-->
+    </div>
+</section>
+
+
